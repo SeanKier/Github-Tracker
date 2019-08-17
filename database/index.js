@@ -46,12 +46,20 @@ let save = (repo) => {
 }
 const getRepos = (callback) => {
 
-  // fetch the data
+  // // fetch the data
+  // console.log('getRepos >>>>>>>>>>>>>>>>>>>>>>>')
   Repo.find({}, (err, data) => {
+    // console.log('err >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', err);
+    // console.log('dara >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
+    if (err) {
 
-    callback(err, data)
-  })
+      callback(err, null);
+    } else {
+      callback(null, data);
+    }
+  });
 
  }
 
 module.exports.save = save;
+module.exports.getRepos = getRepos;

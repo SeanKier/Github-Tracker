@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const getRepos = require('../helpers/github.js');
+const github = require('../helpers/github.js');
 const database = require('../database/index.js');
 
 
@@ -11,9 +11,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/../client/dist'));
 
-app.get('/repos', function(req, res) {
-  database.getRepos()
-})
+// app.get('/repos', function(req, res) {
+//   database.getRepos()
+// })
 
 app.post('/repos', function (req, res) {
   // TODO - your code here!
@@ -21,7 +21,7 @@ app.post('/repos', function (req, res) {
   // and get the repo information from the github API, then
   // save the repo information in the database
   const user = Object.keys(req.body)[0];
-  getRepos.getReposByUsername(user, (err, results) => {
+  github.getReposByUsername(user, (err, results) => {
 
     if (err) {
       res.status(400).send(err);
@@ -41,9 +41,19 @@ app.get('/repos', function (req, res) {
   // This route should send back the top 25 repos
 
     database.getRepos((err, results) => {
+      if (err) {
+        res.status(400).send(err);
+      } else {
+        const sortData = results.sort(function(a, b) {
+          return a.stargazers_count - b.stargazera_count;
+        })
+        const topTwentyFive = sortData.slice(-25);
+        console.log(topTwentyFive)
+        res.status(200).send(topTwentyFive);
 
+      }
     })
-  }
+  })
 
 let port = 1128;
 

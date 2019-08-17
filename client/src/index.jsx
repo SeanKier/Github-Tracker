@@ -12,20 +12,9 @@ class App extends React.Component {
     }
 
   }
-  getTopRepos() {
-    $.ajax({
-      type: "get",
-      url: "http://localhost:1128/repos",
-      contentTupe: "application/json",
-      success: (data) => {
-        console.log(data);
-      },
-      error: () => {
-        console.log('>>>>>>>>>>>>>>> post error')
-      }
+  // getTopRepos() {
 
-    })
-  }
+  // }
   search (term) {
     console.log(`${term} was searched`);
     // TODO
@@ -44,6 +33,24 @@ class App extends React.Component {
 
     })
 
+  }
+  componentDidMount() {
+
+    $.ajax({
+      type: "get",
+      url: "http://localhost:1128/repos",
+      contentTupe: "application/json",
+      success: (data) => {
+       
+        this.setState({
+          repos: data,
+        })
+      },
+      error: () => {
+        console.log('>>>>>>>>>>>>>>> post error')
+      }
+
+    })
   }
 
   render () {
