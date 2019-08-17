@@ -1,12 +1,15 @@
 import React from 'react';
 const RepoTableRow = (props) => {
-  // console.log(props.repo,userName);
+  // console.log(props.repo.userName);
   // console.log()
+  
   return (
     <tr>
       <td> {props.repo.userName}</td>
       <td> {props.repo.projectName}</td>
-      <td> {props.repo.projectUrl}</td>
+      <td>
+        <a href={`${props.repo.projectUrl}`}>{props.repo.projectUrl}</a>
+      </td>
       <td> {props.repo.description}</td>
       <td> {props.repo.stars}</td>
     </tr>
@@ -19,10 +22,13 @@ const RepoList = (props) => (
     There are {props.repos.length} repos.
 
     <table>
-      {props.repos.map(repo =>
-          <RepoTableRow repo={repo} />
-        )}
+      <tbody>
+        {props.repos.map(repo =>
+            <RepoTableRow repo={repo} />
+          )}
+      </tbody>
     </table>
+
 
   </div>
 )

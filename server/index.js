@@ -27,11 +27,16 @@ app.post('/repos', function (req, res) {
       res.status(400).send(err);
     } else {
       const parsed = JSON.parse(results);
+      let numberOfParsed = parsed.length;
       parsed.forEach(function(repo) {
-        database.save(repo);
+        database.save(repo, (err, results) => {
+          numberOfParsed--;
+          if (numberOfParsed === 0) {
+            res.status(200).send(results);
+          }
+        });
       })
-      res.status(200).send(results);
-    }
+     }
   });
 
 });
@@ -45,9 +50,9 @@ app.get('/repos', function (req, res) {
         res.status(400).send(err);
       } else {
         const sortData = results.sort(function(a, b) {
-          return a.stargazers_count - b.stargazera_count;
+          return b.stars - a.stars;
         })
-        const topTwentyFive = sortData.slice(-25);
+        const topTwentyFive = sortData.slice(0, 25);
         console.log(topTwentyFive)
         res.status(200).send(topTwentyFive);
 

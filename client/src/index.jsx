@@ -16,7 +16,7 @@ class App extends React.Component {
 
   // }
   search (term) {
-    console.log(`${term} was searched`);
+    // console.log(`${term} was searched`);
     // TODO
     //post request
     $.ajax({
@@ -26,6 +26,7 @@ class App extends React.Component {
       contentTupe: "application/json",
       success: (data) => {
         console.log(data);
+        this.getRequest();
       },
       error: () => {
         console.log('>>>>>>>>>>>>>>> post error')
@@ -35,13 +36,31 @@ class App extends React.Component {
 
   }
   componentDidMount() {
+    this.getRequest();
+    // $.ajax({
+    //   type: "get",
+    //   url: "http://localhost:1128/repos",
+    //   contentTupe: "application/json",
+    //   success: (data) => {
 
+    //     this.setState({
+    //       repos: data,
+    //     })
+    //   },
+    //   error: () => {
+    //     console.log('>>>>>>>>>>>>>>> post error')
+    //   }
+
+    // })
+  }
+  getRequest(){
+    console.log('>>>>>>>>>>>>>>> getRequest')
     $.ajax({
       type: "get",
       url: "http://localhost:1128/repos",
       contentTupe: "application/json",
       success: (data) => {
-       
+
         this.setState({
           repos: data,
         })

@@ -19,12 +19,28 @@ let repoSchema = mongoose.Schema({
 
 let Repo = mongoose.model('Repo', repoSchema);
 
-let save = (repo) => {
+let save = (repo, callback) => {
   // TODO: Your code here
   // This function should save a repo or repos to
   // the MongoDB
+  const newRepo = new Repo({
+    userID: repo.owner.id,
+    projectName: repo.name,
+    userName: repo.owner.html_url,
+    projectUrl: repo.html_url,
+    description: repo.description,
+    stars: repo.stargazers_count
+  })
+  // newRepo.save((error, newRepo) => {
+  //   if (error) {
+  //     console.log("ERROR >>>> " + error);
+  //   } else {
+  //     console.log("SAVED >>>>");
+  //   }
+  // })
   Repo.findOne({projectUrl: repo.html_url}, function(err, results) {
-    if (results === undefined) {
+    console.log(results);
+    if (results === null) {
       const newRepo = new Repo({
         userID: repo.owner.id,
         projectName: repo.name,
@@ -35,15 +51,19 @@ let save = (repo) => {
       })
       newRepo.save((error, newRepo) => {
         if (error) {
-          console.log("ERROR >>>> " + error);
+          callback(error, null);
         } else {
-          console.log("SAVED >>>>");
+          callback(error, newRepo);
         }
       })
     }
   })
 
 }
+// Repo.remove({}, function(err) {
+//   console.log('collection removed')
+// });
+
 const getRepos = (callback) => {
 
   // // fetch the data
