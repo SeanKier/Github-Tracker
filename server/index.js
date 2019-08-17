@@ -49,11 +49,12 @@ app.get('/repos', function (req, res) {
       if (err) {
         res.status(400).send(err);
       } else {
+        const totalRepos = results.length;
         const sortData = results.sort(function(a, b) {
           return b.stars - a.stars;
         })
         const topTwentyFive = sortData.slice(0, 25);
-        console.log(topTwentyFive)
+        topTwentyFive.push(totalRepos);
         res.status(200).send(topTwentyFive);
 
       }

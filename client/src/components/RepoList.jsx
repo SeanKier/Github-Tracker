@@ -2,7 +2,7 @@ import React from 'react';
 const RepoTableRow = (props) => {
   // console.log(props.repo.userName);
   // console.log()
-  
+
   return (
     <tr>
       <td> {props.repo.userName}</td>
@@ -18,8 +18,9 @@ const RepoTableRow = (props) => {
 const RepoList = (props) => (
 
   <div>
-    <h4> Repo List Component </h4>
-    There are {props.repos.length} repos.
+
+    There are {props.number} repos.
+    <h4> Top 25 Reops </h4>
 
     <table>
       <tbody>

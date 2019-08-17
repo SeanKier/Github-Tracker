@@ -8,7 +8,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      repos: []
+      repos: [],
+      number: 0
     }
 
   }
@@ -60,13 +61,15 @@ class App extends React.Component {
       url: "http://localhost:1128/repos",
       contentTupe: "application/json",
       success: (data) => {
-
+        const repoList = data.slice(0, -1);
+        const totalNumber = data.slice(-1)
         this.setState({
           repos: data,
+          number: totalNumber
         })
       },
       error: () => {
-        console.log('>>>>>>>>>>>>>>> post error')
+        console.log('>>>>>>>>>>>>>>> get error')
       }
 
     })
@@ -75,7 +78,7 @@ class App extends React.Component {
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos}/>
+      <RepoList repos={this.state.repos} number={this.state.number}/>
       <Search onSearch={this.search.bind(this)}/>
     </div>)
   }
