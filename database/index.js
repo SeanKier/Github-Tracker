@@ -31,15 +31,9 @@ let save = (repo, callback) => {
     description: repo.description,
     stars: repo.stargazers_count
   })
-  // newRepo.save((error, newRepo) => {
-  //   if (error) {
-  //     console.log("ERROR >>>> " + error);
-  //   } else {
-  //     console.log("SAVED >>>>");
-  //   }
-  // })
+  
   Repo.findOne({projectUrl: repo.html_url}, function(err, results) {
-    console.log(results);
+    // console.log(results);
     if (results === null) {
       const newRepo = new Repo({
         userID: repo.owner.id,
