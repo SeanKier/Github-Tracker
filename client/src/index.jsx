@@ -13,18 +13,15 @@ class App extends React.Component {
     }
 
   }
- 
+
   search (term) {
-    // console.log(`${term} was searched`);
-    // TODO
-    //post request
+
     $.ajax({
       type: "post",
       url: "http://localhost:1128/repos",
       data: term,
       contentTupe: "application/json",
       success: (data) => {
-        // console.log(data);
         this.getRequest();
       },
       error: () => {

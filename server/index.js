@@ -8,19 +8,14 @@ const database = require('../database/index.js');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 app.use(express.static(__dirname + '/../client/dist'));
-
-// app.get('/repos', function(req, res) {
-//   database.getRepos()
-// })
 
 app.post('/repos', function (req, res) {
   // TODO - your code here!
   // This route should take the github username provided
   // and get the repo information from the github API, then
   // save the repo information in the database
-  const user = Object.keys(req.body)[0];
+  
   github.getReposByUsername(user, (err, results) => {
 
     if (err) {

@@ -31,9 +31,9 @@ let save = (repo, callback) => {
     description: repo.description,
     stars: repo.stargazers_count
   })
-  
+
   Repo.findOne({projectUrl: repo.html_url}, function(err, results) {
-    // console.log(results);
+
     if (results === null) {
       const newRepo = new Repo({
         userID: repo.owner.id,
@@ -60,11 +60,8 @@ let save = (repo, callback) => {
 
 const getRepos = (callback) => {
 
-  // // fetch the data
-  // console.log('getRepos >>>>>>>>>>>>>>>>>>>>>>>')
   Repo.find({}, (err, data) => {
-    // console.log('err >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', err);
-    // console.log('dara >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
+
     if (err) {
 
       callback(err, null);
